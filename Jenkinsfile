@@ -97,4 +97,19 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            // Clean up workspace
+            cleanWs()
+        }
+        success {
+            // Notify success (you can add email or Slack notifications here)
+                slackSend channel: 'aug-2024-weekend-batch', message: 'pipeline was successful....'
+        }
+        failure {
+            // Notify failure
+            echo "Build or deployment failed."
+        }
+    }
 }
