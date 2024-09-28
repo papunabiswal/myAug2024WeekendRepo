@@ -6,6 +6,12 @@ pipeline {
     }
     
     stages {
+
+        stage ("informing") {
+            steps {
+                slackSend channel: 'aug-2024-weekend-batch', message: 'pipeline execution is starting now..'
+            }
+        }
         stage('Checkout') {
             steps {
                 git branch: 'main', credentialsId: '4e106a4d-293e-49d2-ac7a-b7852703aad8', url: 'https://github.com/akannan1087/myAug2024WeekendRepo'
