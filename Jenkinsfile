@@ -30,12 +30,20 @@ pipeline {
             }
         }
         
-        stage ("Code analysis") {
+        stage ("Code scan") {
             steps {
                 script {
                     withSonarQubeEnv(credentialsId: 'c6e025d1-c44b-40a1-ac02-7911a9d17d48') {
                     sh "mvn sonar:sonar -f MyWebApp/pom.xml"
                     }
+                }
+            }
+        }
+
+        stage ("Quality gate") {
+            steps {
+                    timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
                 }
             }
         }
